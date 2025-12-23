@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>슈퍼플랫 2026 로드맵</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 헤더 */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .vision {
+            font-size: 1.4rem;
+            color: #a0aec0;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .header .vision strong {
+            color: #667eea;
+        }
+
+        /* 현재 위치 표시 */
+        .current-date {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .current-date span {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid #667eea;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            color: #667eea;
+        }
+
+        /* 타임라인 헤더 */
+        .timeline-header {
+            display: grid;
+            grid-template-columns: 200px repeat(12, 1fr);
+            gap: 4px;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+
+        .timeline-header .label {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        .timeline-header .month {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #a0aec0;
+            padding: 10px 0;
+            border-bottom: 2px solid #2d3748;
+        }
+
+        .timeline-header .month.current {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            font-weight: 600;
+        }
+
+        .timeline-header .month.q1 {
+            background: rgba(72, 187, 120, 0.1);
+        }
+
+        .timeline-header .month.q2 {
+            background: rgba(237, 137, 54, 0.1);
+        }
+
+        .timeline-header .month.q3-q4 {
+            background: rgba(159, 122, 234, 0.1);
+        }
+
+        /* 프로젝트 로우 */
+        .project-row {
+            display: grid;
+            grid-template-columns: 200px repeat(12, 1fr);
+            gap: 4px;
+            margin-bottom: 16px;
+            padding: 0 20px;
+            align-items: center;
+        }
+
+        .project-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .project-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .project-icon.mobile { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .project-icon.web { background: linear-gradient(135deg, #48bb78, #38a169); }
+        .project-icon.pc { background: linear-gradient(135deg, #ed8936, #dd6b20); }
+        .project-icon.game { background: linear-gradient(135deg, #9f7aea, #805ad5); }
+
+        .project-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .project-subtitle {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        /* 타임라인 바 */
+        .timeline-cell {
+            height: 60px;
+            position: relative;
+        }
+
+        .timeline-bar {
+            position: absolute;
+            height: 40px;
+            top: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .timeline-bar.mobile {
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            border: 1px solid rgba(102, 126, 234, 0.5);
+        }
+
+        .timeline-bar.web {
+            background: linear-gradient(90deg, rgba(72, 187, 120, 0.3), rgba(56, 161, 105, 0.3));
+            border: 1px solid rgba(72, 187, 120, 0.5);
+        }
+
+        .timeline-bar.pc {
+            background: linear-gradient(90deg, rgba(237, 137, 54, 0.3), rgba(221, 107, 32, 0.3));
+            border: 1px solid rgba(237, 137, 54, 0.5);
+        }
+
+        .timeline-bar.game {
+            background: linear-gradient(90deg, rgba(159, 122, 234, 0.3), rgba(128, 90, 213, 0.3));
+            border: 1px solid rgba(159, 122, 234, 0.5);
+        }
+
+        /* 마일스톤 */
+        .milestone {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 3px solid;
+            background: #1a1a2e;
+            z-index: 10;
+        }
+
+        .milestone.mobile { border-color: #667eea; }
+        .milestone.web { border-color: #48bb78; }
+        .milestone.pc { border-color: #ed8936; }
+        .milestone.game { border-color: #9f7aea; }
+
+        .milestone-label {
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            white-space: nowrap;
+            background: rgba(0,0,0,0.7);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        /* 분기 구분선 */
+        .quarter-divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* 범례 */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 60px 0 40px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+        }
+
+        .legend-color.mobile { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .legend-color.web { background: linear-gradient(135deg, #48bb78, #38a169); }
+        .legend-color.pc { background: linear-gradient(135deg, #ed8936, #dd6b20); }
+        .legend-color.game { background: linear-gradient(135deg, #9f7aea, #805ad5); }
+
+        /* 목표 섹션 */
+        .goals-section {
+            margin-top: 80px;
+            padding-top: 60px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .goals-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #a0aec0;
+        }
+
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .goal-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .goal-card .quarter {
+            font-size: 0.85rem;
+            color: #667eea;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .goal-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .goal-card ul {
+            list-style: none;
+        }
+
+        .goal-card li {
+            padding: 8px 0;
+            color: #a0aec0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .goal-card li::before {
+            content: "→";
+            color: #667eea;
+        }
+
+        /* 핵심 메시지 */
+        .core-message {
+            margin-top: 80px;
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 24px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .core-message h2 {
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+            color: #fff;
+        }
+
+        .core-message p {
+            font-size: 1.1rem;
+            color: #a0aec0;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .core-message .highlight {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* 푸터 */
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #4a5568;
+            font-size: 0.85rem;
+        }
+
+        /* 프로젝트 상세 카드 */
+        .project-details {
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .project-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .project-card .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .project-card .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .project-card .card-icon.mobile { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .project-card .card-icon.web { background: linear-gradient(135deg, #48bb78, #38a169); }
+        .project-card .card-icon.pc { background: linear-gradient(135deg, #ed8936, #dd6b20); }
+        .project-card .card-icon.game { background: linear-gradient(135deg, #9f7aea, #805ad5); }
+
+        .project-card .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .project-card .card-subtitle {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        .project-card .card-body {
+            color: #a0aec0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .project-card .card-body strong {
+            color: #fff;
+        }
+
+        .project-card .launch-badge {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .launch-badge.q1 {
+            background: rgba(72, 187, 120, 0.2);
+            color: #48bb78;
+        }
+
+        .launch-badge.q4 {
+            background: rgba(159, 122, 234, 0.2);
+            color: #9f7aea;
+        }
+
+        /* 반응형 */
+        @media (max-width: 1200px) {
+            .timeline-header,
+            .project-row {
+                display: none;
+            }
+
+            .project-details {
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header .vision {
+                font-size: 1.1rem;
+            }
+
+            .goals-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 프린트 스타일 */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .project-card,
+            .goal-card,
+            .core-message {
+                border: 1px solid #ddd;
+                background: #f9f9f9;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <header class="header">
+            <h1>슈퍼플랫 2026 로드맵</h1>
+            <p class="vision">
+                <strong>"사용자가 만들고, 사용자가 즐기고, 사용자가 수익을 얻는 플랫폼"</strong><br>
+                AI 캐릭터와 인터랙티브 스토리로 새로운 UGC 플랫폼을 만듭니다.
+            </p>
+        </header>
+
+        <!-- 현재 위치 -->
+        <div class="current-date">
+            <span>📍 현재: 2025년 12월</span>
+        </div>
+
+        <!-- 타임라인 헤더 -->
+        <div class="timeline-header">
+            <div class="label">프로젝트</div>
+            <div class="month current">12월</div>
+            <div class="month q1">1월</div>
+            <div class="month q1">2월</div>
+            <div class="month q1">3월</div>
+            <div class="month q2">4월</div>
+            <div class="month q2">5월</div>
+            <div class="month q2">6월</div>
+            <div class="month q3-q4">7월</div>
+            <div class="month q3-q4">8월</div>
+            <div class="month q3-q4">9월</div>
+            <div class="month q3-q4">10월</div>
+            <div class="month q3-q4">11월</div>
+        </div>
+
+        <!-- 모바일 -->
+        <div class="project-row">
+            <div class="project-name">
+                <div class="project-icon mobile">📱</div>
+                <div>
+                    <div class="project-title">모바일</div>
+                    <div class="project-subtitle">AI 캐릭터 UGC</div>
+                </div>
+            </div>
+            <div class="timeline-cell" style="grid-column: span 2;">
+                <div class="timeline-bar mobile" style="left: 0; right: 0;">개발 마무리</div>
+            </div>
+            <div class="timeline-cell" style="position: relative;">
+                <div class="milestone mobile" style="left: 80%;"></div>
+                <div class="milestone-label">2월 소프트런칭</div>
+            </div>
+            <div class="timeline-cell" style="grid-column: span 9;">
+                <div class="timeline-bar mobile" style="left: 0; right: 0; opacity: 0.5;">운영 및 개선</div>
+            </div>
+        </div>
+
+        <!-- 웹 -->
+        <div class="project-row">
+            <div class="project-name">
+                <div class="project-icon web">🌐</div>
+                <div>
+                    <div class="project-title">웹</div>
+                    <div class="project-subtitle">AI 시나리오 생성기</div>
+                </div>
+            </div>
+            <div class="timeline-cell" style="grid-column: span 2;">
+                <div class="timeline-bar web" style="left: 0; right: 0;">프로토타입</div>
+            </div>
+            <div class="timeline-cell" style="position: relative;">
+                <div class="milestone web" style="left: 30%;"></div>
+                <div class="milestone-label">데모 출시</div>
+            </div>
+            <div class="timeline-cell" style="grid-column: span 9;">
+                <div class="timeline-bar web" style="left: 0; right: 0; opacity: 0.5;">테스트 및 개선 → 모바일 확장</div>
+            </div>
+        </div>
+
+        <!-- PC 메타버스 -->
+        <div class="project-row">
+            <div class="project-name">
+                <div class="project-icon pc">🖥️</div>
+                <div>
+                    <div class="project-title">PC 메타버스</div>
+                    <div class="project-subtitle">슈퍼타운 + AI 페르소나</div>
+                </div>
+            </div>
+            <div class="timeline-cell" style="grid-column: span 3;">
+                <div class="timeline-bar pc" style="left: 0; right: 0;">안정화 + AI 페르소나</div>
+            </div>
+            <div class="timeline-cell" style="position: relative;">
+                <div class="milestone pc" style="left: 80%;"></div>
+                <div class="milestone-label">2월 출시</div>
+            </div>
+            <div class="timeline-cell" style="grid-column: span 8;">
+                <div class="timeline-bar pc" style="left: 0; right: 0; opacity: 0.5;">슈퍼타운 5축 기능 개발 (VOD, 마켓, 아트)</div>
+            </div>
+        </div>
+
+        <!-- 게임 -->
+        <div class="project-row">
+            <div class="project-name">
+                <div class="project-icon game">🎮</div>
+                <div>
+                    <div class="project-title">PC 게임</div>
+                    <div class="project-subtitle">힐링 액션</div>
+                </div>
+            </div>
+            <div class="timeline-cell" style="grid-column: span 2;">
+                <div class="timeline-bar game" style="left: 0; right: 0;">기획 + 채용</div>
+            </div>
+            <div class="timeline-cell" style="grid-column: span 4;">
+                <div class="timeline-bar game" style="left: 0; right: 0;">프로토 + 데모 개발</div>
+            </div>
+            <div class="timeline-cell" style="position: relative;">
+                <div class="milestone game" style="left: 50%;"></div>
+                <div class="milestone-label">프로토/데모</div>
+            </div>
+            <div class="timeline-cell" style="grid-column: span 5;">
+                <div class="timeline-bar game" style="left: 0; right: 0;">본격 개발 + 퍼블리셔</div>
+            </div>
+        </div>
+
+        <!-- 범례 -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color mobile"></div>
+                <span>모바일 앱</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color web"></div>
+                <span>웹 서비스</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color pc"></div>
+                <span>PC 메타버스</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color game"></div>
+                <span>PC 게임</span>
+            </div>
+        </div>
+
+        <!-- 프로젝트 상세 -->
+        <div class="project-details">
+            <div class="project-card">
+                <div class="card-header">
+                    <div class="card-icon mobile">📱</div>
+                    <div>
+                        <div class="card-title">슈퍼플랫 모바일</div>
+                        <div class="card-subtitle">AI 캐릭터와 대화하고, 나만의 캐릭터를 만들어 공유</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <strong>제공 콘텐츠</strong><br>
+                    • 회사 제작 에피소드<br>
+                    • B2B 캐릭터 (유지태, 엔카이브, IP)<br>
+                    • 사용자 제작 AI 캐릭터 (UGC)<br><br>
+                    <strong>핵심 기능</strong><br>
+                    • 캐릭터 꾸미기<br>
+                    • AI 성격/말투 설정<br>
+                    • 캐릭터 공유
+                </div>
+                <div class="launch-badge q1">2월 소프트런칭 목표</div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-header">
+                    <div class="card-icon web">🌐</div>
+                    <div>
+                        <div class="card-title">슈퍼플랫 웹</div>
+                        <div class="card-subtitle">AI로 인터랙티브 스토리를 만들고 공유</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <strong>핵심 기능</strong><br>
+                    • AI 시나리오 자동 생성<br>
+                    • 분기형 에피소드 제작<br>
+                    • 크리에이터 수익 배분<br><br>
+                    <strong>전략</strong><br>
+                    • 웹에서 먼저 테스트<br>
+                    • 개선 후 모바일 확장
+                </div>
+                <div class="launch-badge q1">2월 데모 출시</div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-header">
+                    <div class="card-icon pc">🖥️</div>
+                    <div>
+                        <div class="card-title">슈퍼플랫 PC</div>
+                        <div class="card-subtitle">3D 가상 세계, 소셜, 창작 공간</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <strong>핵심 기능</strong><br>
+                    • 슈퍼타운 (가상 도시)<br>
+                    • 마이스페이스 (나만의 공간)<br>
+                    • AI 캐릭터 페르소나<br><br>
+                    <strong>슈퍼타운 5축 (출시 후 확장)</strong><br>
+                    • VOD 상영관<br>
+                    • 마켓<br>
+                    • 아트 갤러리<br>
+                    <span style="color: #718096; font-size: 0.85rem;">※ 아트실 목업 진행 중</span><br><br>
+                    <strong>현재 상태</strong><br>
+                    • 80~90% 완성<br>
+                    • AI 페르소나 추가 중
+                </div>
+                <div class="launch-badge q1">2월 출시 → 이후 기능 확장</div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-header">
+                    <div class="card-icon game">🎮</div>
+                    <div>
+                        <div class="card-title">슈퍼플랫 게임</div>
+                        <div class="card-subtitle">힐링 액션, 정화 컨셉</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <strong>게임 컨셉</strong><br>
+                    • 슈퍼타운의 균열을 정화<br>
+                    • 몬스터 퇴치 → 도시 회복<br>
+                    • 꾸미기 아이템 보상<br><br>
+                    <strong>일정</strong><br>
+                    • 상반기: 기획 + 프로토/데모<br>
+                    • 하반기: 본격 개발 + 퍼블리셔<br><br>
+                    <strong>타겟</strong><br>
+                    • 20~30대 여성
+                </div>
+                <div class="launch-badge q4">하반기 개발</div>
+            </div>
+        </div>
+
+        <!-- 분기별 목표 -->
+        <section class="goals-section">
+            <h2>분기별 목표</h2>
+            <div class="goals-grid">
+                <div class="goal-card">
+                    <div class="quarter">2026 Q1 (1~3월)</div>
+                    <h3>🚀 서비스 출시 + 게임 기획</h3>
+                    <ul>
+                        <li>모바일/웹/PC 소프트런칭</li>
+                        <li>게임 기획 완료</li>
+                        <li>게임 인력 채용</li>
+                        <li>사용자 반응 확인</li>
+                    </ul>
+                </div>
+
+                <div class="goal-card">
+                    <div class="quarter">2026 Q2 (4~6월)</div>
+                    <h3>📈 서비스 안정화 + 프로토/데모</h3>
+                    <ul>
+                        <li>서비스 피드백 반영</li>
+                        <li>게임 프로토타입 개발</li>
+                        <li>게임 데모 완료</li>
+                        <li>웹 UGC → 모바일 확장</li>
+                    </ul>
+                </div>
+
+                <div class="goal-card">
+                    <div class="quarter">2026 Q3~Q4 (7~12월)</div>
+                    <h3>🎮 게임 개발 + 퍼블리셔</h3>
+                    <ul>
+                        <li>게임 본격 개발</li>
+                        <li>퍼블리셔 미팅/계약</li>
+                        <li>서비스 지속 운영</li>
+                        <li>콘텐츠 확장</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 핵심 메시지 -->
+        <div class="core-message">
+            <h2>우리가 함께 만들어가는 것</h2>
+            <p>
+                핵심만 간추려서 <span class="highlight">빠르게 사용자를 만나는 것</span>이 목표입니다.<br><br>
+                완벽하게 준비하는 것보다, 출시하고 반응을 보고 개선하는 것이 중요합니다.<br><br>
+                그리고 가장 중요한 것은,<br>
+                <span class="highlight">우리가 서로 믿고 협력할 수 있는 팀</span>이 되는 것입니다.
+            </p>
+        </div>
+
+        <!-- 푸터 -->
+        <footer class="footer">
+            <p>슈퍼플랫 개발실 | 2025년 12월</p>
+        </footer>
+    </div>
+</body>
+</html>
