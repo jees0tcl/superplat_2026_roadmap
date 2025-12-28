@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>슈퍼플랫 2025 Q1 로드맵</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 40px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* 헤더 */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .header .date {
+            color: #667eea;
+            font-size: 0.9rem;
+        }
+
+        /* 로드맵 테이블 */
+        .roadmap {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .roadmap-header {
+            display: grid;
+            grid-template-columns: 140px repeat(3, 1fr);
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .roadmap-header > div {
+            padding: 16px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .roadmap-header > div:first-child {
+            text-align: left;
+            color: #a0aec0;
+        }
+        .month-jan { color: #48bb78; }
+        .month-feb { color: #667eea; }
+        .month-mar { color: #ed8936; }
+
+        .roadmap-row {
+            display: grid;
+            grid-template-columns: 140px repeat(3, 1fr);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .roadmap-row:last-child { border-bottom: none; }
+
+        .project-label {
+            padding: 20px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+        .project-label .icon {
+            font-size: 1.3rem;
+        }
+
+        .cell {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+        .cell:last-child { border-right: none; }
+
+        .task {
+            background: rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .task.highlight {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.4);
+        }
+        .task.launch {
+            background: rgba(72, 187, 120, 0.2);
+            border: 1px solid rgba(72, 187, 120, 0.4);
+        }
+        .task strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+        .task span {
+            color: #a0aec0;
+            font-size: 0.85rem;
+        }
+
+        /* 범례 */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+        .legend-item { display: flex; align-items: center; gap: 8px; }
+        .legend-dot {
+            width: 12px; height: 12px;
+            border-radius: 4px;
+        }
+        .legend-dot.mobile { background: #667eea; }
+        .legend-dot.web { background: #48bb78; }
+        .legend-dot.pc { background: #ed8936; }
+        .legend-dot.game { background: #9f7aea; }
+
+        /* 핵심 메시지 */
+        .summary {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .summary-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        .summary-card h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .summary-card p {
+            color: #a0aec0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .summary-card .em { color: #667eea; font-weight: 600; }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #4a5568;
+            font-size: 0.85rem;
+        }
+
+        /* 모바일 컨셉 섹션 */
+        .mobile-concept {
+            margin-top: 50px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 16px;
+            padding: 32px;
+        }
+        .concept-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .concept-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .concept-tagline {
+            color: #a0aec0;
+            font-size: 0.95rem;
+        }
+        .concept-definition {
+            text-align: center;
+            margin-bottom: 28px;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+        }
+        .core-sentence {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+        }
+        .platform-roles {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .role-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .role-card h4 {
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        .role-title {
+            color: #a0aec0;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        .role-card ul {
+            list-style: none;
+            font-size: 0.85rem;
+            color: #cbd5e0;
+        }
+        .role-card li {
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+        .role-card li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+        .pc-role { border-left: 3px solid #ed8936; }
+        .mobile-role { border-left: 3px solid #667eea; }
+
+        .world-examples {
+            margin-bottom: 24px;
+        }
+        .world-examples h4 {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .example-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+        }
+        .example-icon {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        .example-item strong {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        .example-item span:last-child {
+            font-size: 0.8rem;
+            color: #a0aec0;
+        }
+
+        .economy-cycle {
+            text-align: center;
+            padding: 16px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        .economy-cycle h4 {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .economy-cycle p {
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        .cycle-desc {
+            color: #a0aec0;
+            font-size: 0.85rem !important;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 20px; }
+            .roadmap-header, .roadmap-row {
+                grid-template-columns: 100px repeat(3, 1fr);
+            }
+            .summary { grid-template-columns: 1fr; }
+            .platform-roles { grid-template-columns: 1fr; }
+            .example-grid { grid-template-columns: 1fr; }
+            .mobile-concept { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>슈퍼플랫 2025 Q1 로드맵</h1>
+            <p class="date">2024.12.28 회의 결과 반영</p>
+        </header>
+
+        <div class="roadmap">
+            <div class="roadmap-header">
+                <div>플랫폼</div>
+                <div class="month-jan">1월</div>
+                <div class="month-feb">2월</div>
+                <div class="month-mar">3월</div>
+            </div>
+
+            <!-- 모바일 -->
+            <div class="roadmap-row">
+                <div class="project-label">
+                    <span class="icon">📱</span> 모바일
+                </div>
+                <div class="cell">
+                    <div class="task">
+                        <strong>AI 페르소나 개발</strong>
+                        <span>사용자 커스터마이징</span>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="task launch">
+                        <strong>소프트런칭</strong>
+                        <span>AI 페르소나 탑재</span>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="task highlight">
+                        <strong>AI 에피소드 생성기 연동</strong>
+                        <span>+ 수익 배분 모델</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 웹 -->
+            <div class="roadmap-row">
+                <div class="project-label">
+                    <span class="icon">🌐</span> 웹
+                </div>
+                <div class="cell">
+                    <div class="task">
+                        <strong>프로토타입</strong>
+                        <span>AI 시나리오 + 분기형 에피소드</span>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="task">
+                        <strong>사내 내부 테스트</strong>
+                        <span>피드백 수집 + 개선</span>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="task highlight">
+                        <strong>모바일 확장</strong>
+                        <span>검증된 기능 마이그레이션</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PC -->
+            <div class="roadmap-row">
+                <div class="project-label">
+                    <span class="icon">🖥️</span> PC
+                </div>
+                <div class="cell">
+                    <div class="task">
+                        <strong>출시 준비</strong>
+                        <span>안정화 + AI 페르소나</span>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="task launch">
+                        <strong>소프트런칭</strong>
+                        <span>슈퍼타운 + 마이스페이스 + 스토리&보드 + 퀘스트 + AI페르소나</span>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="task">
+                        <strong>기능 업데이트</strong>
+                        <span>VOD, 마켓 등</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 게임 -->
+            <div class="roadmap-row">
+                <div class="project-label">
+                    <span class="icon">🎮</span> 게임
+                </div>
+                <div class="cell">
+                    <div class="task">
+                        <strong>기획/시스템설계</strong>
+                        <span>+ 채용</span>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="task">
+                        <strong>프로토타입</strong>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="task">
+                        <strong>데모 개발</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item"><div class="legend-dot mobile"></div> 모바일 (최종 서비스)</div>
+            <div class="legend-item"><div class="legend-dot web"></div> 웹 (사내 테스트용)</div>
+            <div class="legend-item"><div class="legend-dot pc"></div> PC</div>
+            <div class="legend-item"><div class="legend-dot game"></div> 게임</div>
+        </div>
+
+        <div class="summary">
+            <div class="summary-card">
+                <h3>🌐 웹 전략</h3>
+                <p>
+                    <span class="em">별도 출시 X</span> — 사내 테스트 전용<br>
+                    1월 프로토타입 → 2월 사내 테스트 → 3월 모바일 확장
+                </p>
+            </div>
+            <div class="summary-card">
+                <h3>📱 모바일 전략</h3>
+                <p>
+                    <span class="em">최종 서비스 플랫폼</span><br>
+                    1월 AI 페르소나 → 2월 소프트런칭 → 3월 AI 에피소드 생성기 연동
+                </p>
+            </div>
+        </div>
+
+        <!-- 모바일 컨셉 노티 -->
+        <div class="mobile-concept">
+            <div class="concept-header">
+                <h2>📱 Superplat Mobile — The Little Muse in Your Pocket</h2>
+                <p class="concept-tagline">AI 캐릭터를 통한 세계관 탐험 인터페이스</p>
+            </div>
+
+            <div class="concept-definition">
+                <p class="core-sentence">
+                    Superplat은 AI 캐릭터를 <span class="em">'대화 상대'가 아니라</span><br>
+                    세상과 나를 연결하는 <span class="em">'인터페이스'</span>로 사용하는<br>
+                    <strong>모바일 인터랙티브 멀티버스 플랫폼</strong>이다.
+                </p>
+            </div>
+
+            <div class="platform-roles">
+                <div class="role-card pc-role">
+                    <h4>🖥️ PC = The Lab</h4>
+                    <p class="role-title">설계자(Director)의 공간</p>
+                    <ul>
+                        <li>지식 카트리지 주입</li>
+                        <li>페르소나 튜닝 (역할 기반)</li>
+                        <li>세계관 설계</li>
+                    </ul>
+                </div>
+                <div class="role-card mobile-role">
+                    <h4>📱 Mobile = The Window</h4>
+                    <p class="role-title">탐험가(Protagonist)의 창</p>
+                    <ul>
+                        <li>세계관 체험 & 상호작용</li>
+                        <li>시나리오 선택 & 진행</li>
+                        <li>Memory Shard 획득</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="world-examples">
+                <h4>🌍 World Pack 시나리오 예시</h4>
+                <div class="example-grid">
+                    <div class="example-item">
+                        <span class="example-icon">⚔️</span>
+                        <strong>판타지 어드벤처</strong>
+                        <span>왕국 최후의 연금술사</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-icon">🤖</span>
+                        <strong>SF 스릴러</strong>
+                        <span>코드네임: 뉴런</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-icon">🌙</span>
+                        <strong>감성 라이프스타일</strong>
+                        <span>심야의 숲속 상담소</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="economy-cycle">
+                <h4>💎 자원 순환</h4>
+                <p>"<span class="em">모바일에서 벌어서, PC에서 만든다</span>"</p>
+                <p class="cycle-desc">대화 채굴 → Memory Shard 획득 → PC 가공 → 캐릭터 고도화</p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            슈퍼플랫 개발실 | 2024.12.28 회의 결과
+        </footer>
+    </div>
+</body>
+</html>
